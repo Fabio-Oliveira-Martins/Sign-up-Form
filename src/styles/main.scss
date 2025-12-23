@@ -1,0 +1,225 @@
+// ===== MODULES ===== //
+
+@use "sass:map";
+
+// ===== GETTING FONTS ===== //
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../assets/fonts/static/OpenSans-Regular.ttf");
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../assets/fonts/static/OpenSans-Medium.ttf");
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../assets/fonts/static/OpenSans-Bold.ttf");
+    font-weight: 700;
+}
+
+// ===== GLOBAL VARIABLES ===== //
+
+$colors: (
+    blue-500:hsla(225, 91%, 64%, 1.00),
+    blue-400:hsla(225, 91%, 64%, .90),
+    green-350: hsla(144, 71%, 49%, 0.81),
+    gray-300: hsla(230, 10%, 89%, 1.00),
+);
+
+$font: (
+    font-family: "Open Sans",
+    font-size: (
+        title: 2rem,
+        text: 1rem,
+        label: 1rem,
+        input: 1rem,
+        error-text: .88rem,
+        button: 1.2rem,
+    ),
+    weights: (
+        regular: 400,
+        medium: 500,
+        bold: 700,
+    ),
+);
+
+// ===== @MIXINS ===== //
+
+@mixin display-center() {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@mixin display-column() {
+    display: flex;
+    flex-direction: column;
+}
+
+// ===== RESET ===== //
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-family: sans-serif;
+}
+
+body {
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background-color: map.get($colors, green-350);
+    
+    @include display-column();
+}
+
+// ===== MAIN ===== //
+
+main, section {
+    flex: 1 1;
+    @include display-center();
+}
+
+section {
+    padding: 2rem 0;
+}
+
+button {
+    cursor: pointer;
+}
+
+// ===== SIGN-UP FORM COMPONENT ===== //
+
+.sign-up-form {
+    width: clamp(20rem, 12.727rem + 36.36vw, 40rem);
+    padding: 1.2rem;
+    border-radius: 20px;
+    box-shadow: 5px 5px 18px 8px hsla(0, 0%, 0%, 30%);
+    background-color: white;
+
+    @include display-column();
+    gap: 2rem;
+
+    .sign-up-form__title {
+        text-align: center;
+        font-family: map.get($font, font-family);
+        font-size: map.get($font, font-size, title);
+        font-weight: map.get($font, weights, bold);
+    }
+    
+    // ----- Instructions list ----- //
+
+    .sign-up-form__instructions-list {
+        padding: 1rem 1rem 1rem 2.5rem;
+        border-radius: 10px;
+        background-color: map.get($colors, gray-300);
+
+        @include display-column();
+        gap: 1rem;
+        
+        .sign-up-form__instructions-item {
+            list-style: circle;
+            line-height: 1.5;
+            font-family: map.get($font, font-family);
+            font-size: map.get($font, font-size, text);
+            font-weight: map.get($font, weights, medium);
+        }
+    }
+
+    // ----- Form ----- //
+    
+    .sign-up-form__form {
+        
+        @include display-column();
+        gap: 1.5rem;
+
+        .sign-up-form__row {
+            display: flex;
+            flex-wrap: wrap;
+            column-gap: 3rem;
+            row-gap: 1.5rem
+        }
+
+        .sign-up-form__field {
+            @include display-column();
+            flex: 1;
+            gap: .5rem;
+
+            .sign-up-form__label {
+                font-family: map.get($font, font-family);
+                font-size: map.get($font, font-size, label);
+                font-weight: map.get($font, weights, medium);
+            }
+
+            .sign-up-form__input {
+                width: clamp(12rem, 3.304rem + 18.55vw, 1fr);
+                padding: .7rem 1rem;
+                border-radius: 5px;
+                background-color: map.get($colors, gray-300);
+
+                font-family: map.get($font, font-family);
+                font-size: map.get($font, font-size, input);
+                font-weight: map.get($font, weights, regular);
+
+                &:focus-visible {
+                    outline: solid 2px map.get($colors, blue-500);
+                }
+            }
+
+            // Remove increment and decrement arrows //
+            .sign-up-form__input[type="number"]::-webkit-inner-spin-button,
+            .sign-up-form__input[type="number"]::-webkit-outer-spin-button {
+                appearance: none;
+            }
+
+            .sign-up-form__input[type="number"] {
+                appearance: none;
+            }
+
+            .sign-up-form__error-text {
+                margin-top: .3rem;
+
+                font-family: map.get($font, font-family);
+                font-size: map.get($font, font-size, error-text);
+                font-weight: map.get($font, weights, regular);
+                color: darkred;
+            }
+        }
+
+        .sign-up-form__submit {
+            margin-top: 1rem;
+            padding: .7rem;
+            border-radius: 5px;
+            background-color: map.get($colors, blue-500);
+
+            font-family: map-get($font, font-family);
+            font-size: map-get($font, font-size, button); 
+            font-weight: map-get($font, weights, bold);
+            color: white;
+
+            &:hover {
+                background-color: map.get($colors, blue-400);
+            }
+
+            &:focus-visible {
+                outline: solid 5px orange;
+            }
+        }
+    }
+}
